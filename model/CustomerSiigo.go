@@ -1,22 +1,22 @@
 package model
 
 type CustomerSiigo struct {
-	Active                 bool                      `json:"active"`
-	Address                Address                   `json:"address"`
-	BranchOffice           int                       `json:"branch_office"`
-	CheckDigit             string                    `json:"check_digit,omitempty"`
-	Contacts               []Contacts                `json:"contacts"`
-	FiscalResponsibilities []*FiscalResponsibilities `json:"fiscal_responsibilities,omitempty"`
-	ID                     string                    `json:"id"`
-	IDType                 IDType                    `json:"id_type"`
-	Identification         string                    `json:"identification"`
-	Metadata               *Metadata                 `json:"metadata,omitempty"`
-	Name                   string                    `json:"name"`
-	PersonType             string                    `json:"person_type"`
-	Phones                 []Phones                  `json:"phones,omitempty"`
-	Type                   string                    `json:"type"`
-	VatResponsible         bool                      `json:"vat_responsible"`
-	CommercialName         string                    `json:"commercial_name,omitempty"`
+	Active                 bool                     `json:"active"`
+	Address                Address                  `json:"address"`
+	BranchOffice           int                      `json:"branch_office"`
+	CheckDigit             string                   `json:"check_digit,omitempty"`
+	Contacts               []Contacts               `json:"contacts"`
+	FiscalResponsibilities []FiscalResponsibilities `json:"fiscal_responsibilities,omitempty"`
+	ID                     string                   `json:"id"`
+	IDType                 IDType                   `json:"id_type"`
+	Identification         string                   `json:"identification"`
+	Metadata               *Metadata                `json:"metadata,omitempty"`
+	Name                   string                   `json:"name"`
+	PersonType             string                   `json:"person_type"`
+	Phones                 []Phones                 `json:"phones,omitempty"`
+	Type                   string                   `json:"type"`
+	VatResponsible         bool                     `json:"vat_responsible"`
+	CommercialName         string                   `json:"commercial_name,omitempty"`
 }
 
 type Address struct {

@@ -8,8 +8,8 @@ type AdditionalFields struct {
 	Barcode string `json:"barcode"`
 }
 type Metadata struct {
-	Created     *string `json:"created"`
-	LastUpdated *string `json:"last_updated"`
+	Created     string `json:"created"`
+	LastUpdated string `json:"last_updated"`
 }
 
 type Unit struct {
