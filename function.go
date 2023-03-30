@@ -19,8 +19,12 @@ const (
 	INVOICE  = "/v1/invoices?page_size=" + PageSize + "&page=1"
 )
 
+type PubSubMessage struct {
+	Data []byte `json:"data"`
+}
+
 // ElPorvenirSiigo consumes a Pub/Sub message.
-func ElPorvenirSiigo(ctx context.Context) error {
+func ElPorvenirSiigo(ctx context.Context, m PubSubMessage) error {
 	bigQueryPorvenir := NewBigQueryPorvenir(ctx)
 	bigQueryPorvenir.SiigoElPorvenir()
 	token := getAuthToken()
