@@ -1,8 +1,9 @@
-package p
+package main
 
 import (
 	"el_porvenir.com/cloudfunction/model"
 	"encoding/json"
+	"fmt"
 )
 
 // getProducts retrieves all products from Siigo using the provided access token.
@@ -43,8 +44,14 @@ func getProducts(token model.TokenResult) []model.ProductSiigo {
 //		obtained from responseSiigo.
 func castProducts(responseSiigo interface{}, allProducts []model.ProductSiigo) []model.ProductSiigo {
 	products := new([]model.ProductSiigo)
-	result, _ := json.Marshal(responseSiigo)
-	json.Unmarshal(result, products)
+	result, err := json.Marshal(responseSiigo)
+	if err != nil {
+		fmt.Print(err.Error())
+	}
+	err = json.Unmarshal(result, products)
+	if err != nil {
+		fmt.Print(err.Error())
+	}
 	for _, product := range *products {
 		allProducts = append(allProducts, product)
 	}

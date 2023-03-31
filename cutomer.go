@@ -1,4 +1,4 @@
-package p
+package main
 
 import (
 	"el_porvenir.com/cloudfunction/model"
@@ -44,8 +44,11 @@ func getCustomer(token model.TokenResult) []model.CustomerSiigo {
 //		obtained from responseSiigo.
 func castCustomer(responseSiigo interface{}, allCustomers []model.CustomerSiigo) []model.CustomerSiigo {
 	customers := new([]model.CustomerSiigo)
-	result, _ := json.Marshal(responseSiigo)
-	err := json.Unmarshal(result, customers)
+	result, err := json.Marshal(responseSiigo)
+	if err != nil {
+		fmt.Print(err.Error())
+	}
+	err = json.Unmarshal(result, customers)
 	if err != nil {
 		fmt.Print(err.Error())
 	}

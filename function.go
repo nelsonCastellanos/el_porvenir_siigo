@@ -1,5 +1,5 @@
 // Package p contains a Pub/Sub Cloud Function.
-package p
+package main
 
 import (
 	"context"
@@ -13,7 +13,7 @@ import (
 )
 
 const (
-	PageSize = "5"
+	PageSize = "100"
 	PRODUCT  = "/v1/products?page_size=" + PageSize + "&page=1"
 	CUSTOMER = "/v1/customers?page_size=" + PageSize + "&page=1"
 	INVOICE  = "/v1/invoices?page_size=" + PageSize + "&page=1"

@@ -11,7 +11,7 @@ type CustomerSiigo struct {
 	IDType                 IDType                   `json:"id_type"`
 	Identification         string                   `json:"identification"`
 	Metadata               *Metadata                `json:"metadata,omitempty"`
-	Name                   string                   `json:"name"`
+	Name                   []string                 `json:"name"`
 	PersonType             string                   `json:"person_type"`
 	Phones                 []Phones                 `json:"phones,omitempty"`
 	Type                   string                   `json:"type"`

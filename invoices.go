@@ -1,8 +1,9 @@
-package p
+package main
 
 import (
 	"el_porvenir.com/cloudfunction/model"
 	"encoding/json"
+	"fmt"
 )
 
 // getInvoice retrieves all invoice data from Siigo API using the given access token.
@@ -41,10 +42,16 @@ func getInvoice(token model.TokenResult) []model.InvoiceSiigo {
 //		A slice of model.InvoiceSiigo, which contains all the products obtained so far, including the new products
 //		obtained from responseSiigo.
 func castInvoice(responseSiigo interface{}, allInvoice []model.InvoiceSiigo) []model.InvoiceSiigo {
-	invoces := new([]model.InvoiceSiigo)
-	result, _ := json.Marshal(responseSiigo)
-	json.Unmarshal(result, invoces)
-	for _, invoice := range *invoces {
+	invoices := new([]model.InvoiceSiigo)
+	result, err := json.Marshal(responseSiigo)
+	if err != nil {
+		fmt.Print(err.Error())
+	}
+	err = json.Unmarshal(result, invoices)
+	if err != nil {
+		fmt.Print(err.Error())
+	}
+	for _, invoice := range *invoices {
 		allInvoice = append(allInvoice, invoice)
 	}
 	return allInvoice

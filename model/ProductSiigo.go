@@ -17,16 +17,16 @@ type Unit struct {
 	Name string `json:"name"`
 }
 type Warehouses struct {
-	ID       int    `json:"id"`
-	Name     string `json:"name"`
-	Quantity int    `json:"quantity"`
+	ID       int     `json:"id"`
+	Name     string  `json:"name"`
+	Quantity float64 `json:"quantity"`
 }
 
 type ProductSiigo struct {
 	AccountGroup        AccountGroup      `json:"account_group"`
 	Active              bool              `json:"active"`
 	AdditionalFields    *AdditionalFields `json:"additional_fields,omitempty"`
-	AvailableQuantity   int               `json:"available_quantity"`
+	AvailableQuantity   float64           `json:"available_quantity"`
 	Code                string            `json:"code"`
 	Description         string            `json:"description,omitempty"`
 	ID                  string            `json:"id"`

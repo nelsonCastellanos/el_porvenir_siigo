@@ -1,4 +1,4 @@
-package p
+package main
 
 import (
 	"cloud.google.com/go/bigquery"
@@ -6,7 +6,9 @@ import (
 	"el_porvenir.com/cloudfunction/model"
 	"encoding/base64"
 	"fmt"
+	"google.golang.org/api/googleapi"
 	"google.golang.org/api/option"
+	"net/http"
 	"os"
 )
 
@@ -39,11 +41,11 @@ func (c bigQueryPorvenir) SiigoElPorvenir() {
 // - none
 func (c bigQueryPorvenir) ProductBigquery() {
 	table := c.dataset.Table(TableProduct)
-	schema, _ := bigquery.InferSchema(model.ProductSiigo{})
-	err := table.Create(c.ctx, &bigquery.TableMetadata{Schema: schema})
+	schema, err := bigquery.InferSchema(model.ProductSiigo{})
 	if err != nil {
 		fmt.Printf(err.Error())
 	}
+	c.createTable(table, schema)
 }
 
 // InvoiceBigquery creates a BigQuery table for invoice data.
@@ -53,12 +55,12 @@ func (c bigQueryPorvenir) ProductBigquery() {
 //
 // If the table already exists, this function will do nothing.
 func (c bigQueryPorvenir) InvoiceBigquery() {
-	productTable := c.dataset.Table(TableInvoice)
-	schema, _ := bigquery.InferSchema(model.InvoiceSiigo{})
-	err := productTable.Create(c.ctx, &bigquery.TableMetadata{Schema: schema})
+	invoiceTable := c.dataset.Table(TableInvoice)
+	schema, err := bigquery.InferSchema(model.InvoiceSiigo{})
 	if err != nil {
 		fmt.Printf(err.Error())
 	}
+	c.createTable(invoiceTable, schema)
 }
 
 // CustomerBigquery creates a BigQuery table named "TableCustomer" in the dataset associated with the bigQueryPorvenir instance.
@@ -69,9 +71,27 @@ func (c bigQueryPorvenir) InvoiceBigquery() {
 func (c bigQueryPorvenir) CustomerBigquery() {
 	table := c.dataset.Table(TableCustomer)
 	schema, err := bigquery.InferSchema(model.CustomerSiigo{})
-	err = table.Create(c.ctx, &bigquery.TableMetadata{Schema: schema})
 	if err != nil {
 		fmt.Printf(err.Error())
+	}
+	c.createTable(table, schema)
+}
+
+// createTable creates a new table in BigQuery with the given schema if it does not exist.
+//
+// Parameters:
+// - table: a pointer to the BigQuery table to create
+// - schema: the schema for the table
+func (c bigQueryPorvenir) createTable(table *bigquery.Table, schema bigquery.Schema) {
+	if _, err := table.Metadata(c.ctx); err != nil {
+		if e, ok := err.(*googleapi.Error); ok {
+			if e.Code == http.StatusNotFound {
+				err := table.Create(c.ctx, &bigquery.TableMetadata{Schema: schema})
+				if err != nil {
+					fmt.Printf(err.Error())
+				}
+			}
+		}
 	}
 }
 
