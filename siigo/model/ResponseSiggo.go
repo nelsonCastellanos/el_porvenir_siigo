@@ -1,8 +1,8 @@
-package model
+package siigo_model
 
 type ResponseSiigo struct {
-	LinksV1    Links         `json:"__links"`
-	LinksV2    Links         `json:"_links"`
+	LinksV1    *Links        `json:"__links"`
+	LinksV2    *Links        `json:"_links"`
 	Pagination Pagination    `json:"pagination"`
 	Results    []interface{} `json:"results"`
 }
