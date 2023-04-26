@@ -20,6 +20,7 @@ type InvoiceSiigo struct {
 	MailObservations   string    `json:"mail_observations"`
 	Created            string    `json:"created"`
 	LastUpdated        string    `json:"last_updated,omitempty"`
+	CustomerId         string    `json:"customer_id"`
 }
 
 type Item struct {

@@ -16,7 +16,7 @@ import (
 )
 
 const (
-	Invoice = "Invoice"
+	Invoice = "invoice_porvenir"
 )
 
 func InsertInvoice(ctx context.Context, dataset bigquery.Dataset, listsSiigo siigo_model.SiigoData) {
@@ -26,6 +26,7 @@ func InsertInvoice(ctx context.Context, dataset bigquery.Dataset, listsSiigo sii
 			ID:                 item.ID,
 			Name:               item.Name,
 			Date:               item.Date,
+			CustomerId:         item.Customer.ID,
 			CustomerName:       getCustomerName(item, listsSiigo),
 			CustomerIdTypeCode: getCustomerIdTypeCode(item, listsSiigo),
 			CustomerIdTypeName: getCustomerNameIdTypeName(item, listsSiigo),
