@@ -5,7 +5,7 @@ import (
 )
 
 type InvoiceSiigo struct {
-	ID                 string    `json:"id" bigquery:"ID;key"`
+	ID                 string    `json:"id" bigquery:"id;key"`
 	Name               string    `json:"name"`
 	Date               string    `json:"date"`
 	CustomerName       string    `json:"customer_name"`
