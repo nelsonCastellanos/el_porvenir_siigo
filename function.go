@@ -14,9 +14,10 @@ type PubSubMessage struct {
 
 // ElPorvenirSiigo consumes a Pub/Sub message.
 func ElPorvenirSiigo(ctx context.Context, m PubSubMessage) error {
+	bigQueryPorvenir := bigqueryPorvenir.NewBigQueryPorvenir(ctx)
+	bigQueryPorvenir.CreateTable()
 	token := siigo_request.GetAuthToken()
 	siigoData := siigo.GetSiigoData(token)
-	bigQueryPorvenir := bigqueryPorvenir.NewBigQueryPorvenir(ctx, siigoData)
-	bigQueryPorvenir.SiigoElPorvenir()
+	bigQueryPorvenir.SiigoElPorvenir(siigoData)
 	return nil
 }

@@ -13,13 +13,14 @@ import (
 	siigo_product "el_porvenir.com/cloudfunction/siigo/model/siigo/product"
 	"fmt"
 	"strings"
+	"time"
 )
 
 const (
 	Invoice = "invoice_porvenir"
 )
 
-func InsertInvoice(ctx context.Context, dataset bigquery.Dataset, listsSiigo siigo_model.SiigoData) {
+func InsertInvoice(ctx context.Context, client *bigquery.Client, dataset bigquery.Dataset, listsSiigo siigo_model.SiigoData) {
 	var listBigQuery []bigquery_invoice.InvoiceSiigo
 	for _, item := range listsSiigo.Invoices {
 		invoice := bigquery_invoice.InvoiceSiigo{
@@ -55,19 +56,12 @@ func InsertInvoice(ctx context.Context, dataset bigquery.Dataset, listsSiigo sii
 		}
 		listBigQuery = append(listBigQuery, invoice)
 	}
-	table := dataset.Table(Invoice)
-	schema, err := bigquery.InferSchema(bigquery_invoice.InvoiceSiigo{})
-	if err != nil {
-		fmt.Printf(err.Error())
-	}
-	util_bigquery.CreateTable(ctx, table, schema)
-	err = table.Delete(ctx)
-	if err != nil {
-		fmt.Printf(err.Error())
-	}
-	u := table.Inserter()
+
+	u := client.Dataset(dataset.DatasetID).Table(Invoice).Inserter()
 	if err := u.Put(ctx, listBigQuery); err != nil {
 		fmt.Printf(err.Error())
+		time.Sleep(10 * time.Second)
+		InsertInvoice(ctx, client, dataset, listsSiigo)
 	}
 }
 
