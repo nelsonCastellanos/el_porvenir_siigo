@@ -61,6 +61,10 @@ func InsertInvoice(ctx context.Context, dataset bigquery.Dataset, listsSiigo sii
 		fmt.Printf(err.Error())
 	}
 	util_bigquery.CreateTable(ctx, table, schema)
+	err = table.Delete(ctx)
+	if err != nil {
+		fmt.Printf(err.Error())
+	}
 	u := table.Inserter()
 	if err := u.Put(ctx, listBigQuery); err != nil {
 		fmt.Printf(err.Error())
